@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Məhsul Kalkulyatoru</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .radio-group label {
+            margin: 0 10px;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="product-container">
+        <!-- Məhsul elementləri burada dinamik olaraq əlavə ediləcək -->
+        <!-- Məhsul 1 -->
+        <div class="container" id="product-1">
+            <div>
+                Qiymət: <span class="product-price">1000</span> AZN
+            </div>
+            <div class="radio-group">
+                <label><input type="radio" name="months-1" class="month-radio" value="12" checked> 12 Ay</label>
+                <label><input type="radio" name="months-1" class="month-radio" value="24"> 24 Ay</label>
+                <label><input type="radio" name="months-1" class="month-radio" value="36"> 36 Ay</label>
+                <label><input type="radio" name="months-1" class="month-radio" value="48"> 48 Ay</label>
+            </div>
+            <div class="result" id="monthly-payment-1">Aylıq ödəniş: 83.33 AZN</div>
+        </div>
+
+        <!-- Məhsul 2 -->
+        <div class="container" id="product-2">
+            <div>
+                Qiymət: <span class="product-price">2000</span> AZN
+            </div>
+            <div class="radio-group">
+                <label><input type="radio" name="months-2" class="month-radio" value="12" checked> 12 Ay</label>
+                <label><input type="radio" name="months-2" class="month-radio" value="24"> 24 Ay</label>
+                <label><input type="radio" name="months-2" class="month-radio" value="36"> 36 Ay</label>
+                <label><input type="radio" name="months-2" class="month-radio" value="48"> 48 Ay</label>
+            </div>
+            <div class="result" id="monthly-payment-2">Aylıq ödəniş: 166.67 AZN</div>
+        </div>
+
+        <!-- Məhsul 3 -->
+        <div class="container" id="product-3">
+            <div>
+                Qiymət: <span class="product-price">3000</span> AZN
+            </div>
+            <div class="radio-group">
+                <label><input type="radio" name="months-3" class="month-radio" value="12" checked> 12 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="24"> 24 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="36"> 36 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="48"> 48 Ay</label>
+            </div>
+            <div class="result" id="monthly-payment-3">Aylıq ödəniş: 250.00 AZN</div>
+        </div>
+
+        <!-- Daha çox məhsul əlavə edin -->
+        <div class="container" id="product-4">
+            <div>
+                Qiymət: <span class="product-price">5000</span> AZN
+            </div>
+            <div class="radio-group">
+                <label><input type="radio" name="months-3" class="month-radio" value="12" checked> 12 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="24"> 24 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="36"> 36 Ay</label>
+                <label><input type="radio" name="months-3" class="month-radio" value="48"> 48 Ay</label>
+            </div>
+            <div class="result" id="monthly-payment-3">Aylıq ödəniş: 250.00 AZN</div>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript funksiyaları
+
+        function updatePrice(event) {
+            const radio = event.target;
+            const productId = radio.name.split('-')[1];
+            const priceSpan = document.querySelector(`#product-${productId} .product-price`);
+            const price = parseFloat(priceSpan.textContent);
+            const months = parseInt(radio.value);
+            const monthlyPayment = price / months;
+            const resultElement = document.getElementById(`monthly-payment-${productId}`);
+            resultElement.textContent = `Aylıq ödəniş: ${monthlyPayment.toFixed(2)} AZN`;
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.month-radio').forEach(radio => {
+                radio.addEventListener('change', updatePrice);
+            });
+        }
+
+        window.onload = () => {
+            setupEventListeners();
+            // Səhifə yükləndikdə seçilmiş radio button-ları yoxlayaraq ilkin hesablamaları yerinə yetir
+            document.querySelectorAll('.month-radio:checked').forEach(radio => {
+                updatePrice({ target: radio });
+            });
+        };
+    </script>
+</body>
+</html>
